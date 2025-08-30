@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout Test</title>
+</head>
+<body>
+    <h1>Logout Test</h1>
+    
+    <button onclick="testLogout()" style="background: red; color: white; padding: 10px; margin: 10px;">
+        Test Logout
+    </button>
+    
+    <button onclick="testDirectLogout()" style="background: blue; color: white; padding: 10px; margin: 10px;">
+        Direct Logout
+    </button>
+    
+    <div id="result"></div>
+    
+    <script>
+        function testLogout() {
+            console.log('Testing logout function...');
+            document.getElementById('result').innerHTML = 'Testing logout...';
+            
+            try {
+                logout();
+                document.getElementById('result').innerHTML = 'Logout function called successfully';
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+                console.error('Logout error:', error);
+            }
+        }
+        
+        function testDirectLogout() {
+            console.log('Testing direct logout...');
+            document.getElementById('result').innerHTML = 'Testing direct logout...';
+            
+            // Create a form and submit it to trigger the logout
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/auth/logout';
+            document.body.appendChild(form);
+            form.submit();
+        }
+        
+        // Logout functionality (same as in base.html)
+        function logout() {
+            console.log('Logout function called');
+            // Create a form and submit it to trigger the logout
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/auth/logout';
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
+</body>
+</html>

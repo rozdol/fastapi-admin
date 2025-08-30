@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel - FastAPI Admin{% endblock %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Admin Panel</h1>
+        <div class="flex space-x-3">
+            <button hx-get="/admin/settings/new" hx-target="#modal-content" hx-trigger="click"
+                    class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                Add New Setting
+            </button>
+            <button hx-get="/admin/users/new" hx-target="#modal-content" hx-trigger="click"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                Add New User
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Users</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ stats.total_users }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Active Users</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ stats.active_users }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Inactive Users</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ stats.inactive_users }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+            <div class="p-5">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <div class="ml-5 w-0 flex-1">
+                        <dl>
+                            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400 truncate">Total Settings</dt>
+                            <dd class="text-lg font-medium text-gray-900 dark:text-white">{{ stats.total_settings }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="mb-6">
+        <nav class="flex space-x-8" aria-label="Tabs">
+            <button id="users-tab" class="border-b-2 border-blue-500 text-blue-600 dark:text-blue-400 py-2 px-1 text-sm font-medium" 
+                    onclick="switchTab('users')">
+                Users
+            </button>
+            <button id="settings-tab" class="border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 py-2 px-1 text-sm font-medium" 
+                    onclick="switchTab('settings')">
+                Settings
+            </button>
+        </nav>
+    </div>
+
+    <!-- Users Section -->
+    <div id="users-section" class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Users</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Manage user accounts and permissions.</p>
+        </div>
+        <div id="users-table-container" hx-get="/admin/users" hx-trigger="load" hx-target="#users-table">
+            <div id="users-table" class="px-4 py-5 sm:p-6">
+                <div class="flex justify-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div id="settings-section" class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-md hidden">
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Settings</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Manage application settings and configuration.</p>
+        </div>
+        <div id="settings-table-container" hx-get="/admin/settings" hx-trigger="load" hx-target="#settings-table">
+            <div id="settings-table" class="px-4 py-5 sm:p-6">
+                <div class="flex justify-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for forms -->
+<div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 dark:bg-opacity-75 overflow-y-auto h-full w-full hidden">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800 dark:border-gray-700">
+        <div id="modal-content">
+            <!-- Modal content will be loaded here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Show modal when HTMX loads content into it
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+        if (evt.detail.target.id === 'modal-content' && evt.detail.successful) {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('hidden');
+        }
+    });
+
+    // Also listen for htmx:afterSwap event as a backup
+    document.body.addEventListener('htmx:afterSwap', function(evt) {
+        if (evt.detail.target.id === 'modal-content') {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('hidden');
+        }
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.add('hidden');
+        }
+    });
+
+    // Close modal after successful form submission - but only for form submissions, not for loading forms
+    document.body.addEventListener('htmx:afterRequest', function(evt) {
+        // Only close modal for form submissions (POST/PUT/DELETE requests), not for GET requests
+        // Also exclude edit form requests which are GET requests to /edit endpoints
+        if (evt.detail.successful &&
+            (evt.detail.xhr.responseURL.includes('/admin/users') || evt.detail.xhr.responseURL.includes('/admin/settings')) &&
+            evt.detail.requestConfig.verb !== 'GET' &&
+            evt.detail.requestConfig.verb !== 'get' &&
+            !evt.detail.xhr.responseURL.includes('/edit')) {
+            document.getElementById('modal').classList.add('hidden');
+        }
+    });
+
+    // Tab switching functionality
+    function switchTab(tabName) {
+        // Update tab buttons
+        document.getElementById('users-tab').classList.remove('border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+        document.getElementById('users-tab').classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+        document.getElementById('settings-tab').classList.remove('border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+        document.getElementById('settings-tab').classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+
+        if (tabName === 'users') {
+            document.getElementById('users-tab').classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            document.getElementById('users-tab').classList.add('border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+            document.getElementById('users-section').classList.remove('hidden');
+            document.getElementById('settings-section').classList.add('hidden');
+        } else if (tabName === 'settings') {
+            document.getElementById('settings-tab').classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+            document.getElementById('settings-tab').classList.add('border-blue-500', 'text-blue-600', 'dark:text-blue-400');
+            document.getElementById('settings-section').classList.remove('hidden');
+            document.getElementById('users-section').classList.add('hidden');
+        }
+    }
+</script>
+{% endblock %}

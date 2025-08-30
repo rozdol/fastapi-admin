@@ -1,0 +1,34 @@
+<div class="bg-white dark:bg-gray-800 p-6 rounded-lg">
+    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ "Edit Setting" if setting else "Create New Setting" }}</h3>
+    
+    <form hx-{{ "put" if setting else "post" }}="/admin/settings{{ "/" + setting.setting_name if setting else "" }}" 
+          hx-target="#settings-table" class="space-y-4">
+        
+        <div>
+            <label for="setting_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Setting Name</label>
+            <input type="text" id="setting_name" name="setting_name" value="{{ setting.setting_name if setting else '' }}" 
+                   {{ "readonly" if setting else "" }} required
+                   autocomplete="off"
+                   class="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white {{ 'bg-gray-100 dark:bg-gray-600' if setting else '' }}">
+        </div>
+
+        <div>
+            <label for="value" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Value</label>
+            <textarea id="value" name="value" rows="3" required
+                      autocomplete="off"
+                      class="mt-1 block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 sm:text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      placeholder="Enter setting value">{{ setting.value if setting else '' }}</textarea>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-4">
+            <button type="button" onclick="document.getElementById('modal').classList.add('hidden')"
+                    class="bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-md text-sm font-medium">
+                Cancel
+            </button>
+            <button type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                {{ "Update" if setting else "Create" }}
+            </button>
+        </div>
+    </form>
+</div>
