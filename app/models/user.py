@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.sql import func
-from app.core.database import Base
+from app.core.database import SQLiteBase
 
 
-class User(Base):
+class User(SQLiteBase):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)

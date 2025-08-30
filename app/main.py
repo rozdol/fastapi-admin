@@ -8,12 +8,31 @@ from app.api.v1.endpoints.frontend import router as frontend_router
 from app.core.exceptions import AdminAccessDeniedException
 from fastapi.templating import Jinja2Templates
 from app.core.auth import get_current_user
+from app.core.database import (
+    SQLiteBase, PostgresDB1Base, PostgresDB2Base,
+    sqlite_engine, postgres_db1_engine, postgres_db2_engine
+)
+from contextlib import asynccontextmanager
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    # Create tables for all databases
+    SQLiteBase.metadata.create_all(bind=sqlite_engine)
+    PostgresDB1Base.metadata.create_all(bind=postgres_db1_engine)
+    PostgresDB2Base.metadata.create_all(bind=postgres_db2_engine)
+    yield
+    # Shutdown
+    pass
+
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
     description=settings.DESCRIPTION,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    lifespan=lifespan
 )
 
 # Set up CORS middleware

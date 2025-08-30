@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.sql import func
-from app.core.database import Base
+from app.core.database import SQLiteBase
 
 
-class Settings(Base):
+class Settings(SQLiteBase):
     __tablename__ = "settings"
 
     setting_name = Column(String, primary_key=True, index=True)

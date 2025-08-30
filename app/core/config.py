@@ -21,7 +21,11 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     # Database Configuration
-    DATABASE_URL: str = "sqlite:///./app.db"
+    DATABASE_URL: str = "sqlite:///./app.db"  # SQLite for users and settings
+    
+    # PostgreSQL Database Configurations
+    POSTGRES_DB1_URL: str = "postgresql://user:password@localhost:5432/db1"
+    POSTGRES_DB2_URL: str = "postgresql://user:password@localhost:5432/db2"
     
     # Security Configuration
     SECRET_KEY: str = "your-secret-key-here"
